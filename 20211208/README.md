@@ -53,3 +53,38 @@ function solution(participant, completion) {
 }
 ```
 
+# 문제 3. K번째수
+## 해결방법
+1. commands 배열을 map 메서드를 사용해서 루프롤 돌린다.
+2. array.slice()를 하고 정렬한 뒤 map요소 배열에 마지막 요소를 return 할 배열에 push한다.
+## 코드
+```
+function solution(array, commands) {
+    var answer = [];
+    
+    commands.map(e => {
+        answer.push(array.slice(e[0] - 1, e[1]).sort((a, b) => a - b)[e[2] - 1]);
+    })
+    return answer;
+}
+``` 
+
+## 주목할 점
+자바스크립트의 array.prototype.sort() 메서드는 유니코드를 기준으로 정렬한다.
+```
+const months = ['March', 'Jan', 'Feb', 'Dec'];
+months.sort();
+console.log(months);
+// expected output: Array ["Dec", "Feb", "Jan", "March"]
+
+const array1 = [1, 30, 4, 21, 100000];
+array1.sort();
+console.log(array1);
+// expected output: Array [1, 100000, 21, 30, 4]
+
+```
+보기와 같이 정수를 정렬할 때 정수의 값을 문자로 바꾸어 정렬하기 때문에 정수를 정렬할 때 원하는 정렬을 할 수 없다.
+
+따라서 정수를 정렬하고 싶을땐 sort() 메서드에서 compareFunction을 사용해야 한다.
+
+위의 코드에서 정수를 정렬하고 싶을 때 `array.sort((a, b) => a - b)`로 바꿔야 올바르게 정렬된다. compareFunction에서 리턴값이 음수가 나오면 왼편의 수가 더 작은 것으로 판단하고 정렬이 이루어진다.
