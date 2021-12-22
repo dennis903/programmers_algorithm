@@ -7,3 +7,19 @@
 3. 세로줄 기준 최소 한칸을 차지한다.
 4. 가로줄 기준 2칸을 차지하는 경우는 w / gcd - 1
 5. 최종식 : w * h - [ { ( w / gcd ) + ( h / gcd ) - 1 } * gcd ]
+## 코드
+```
+function solution(w, h) {
+    let long = w > h ? w : h;
+    let short = w > h ? h : w;
+    let g = short;
+    
+    while (long % short !== 0)
+    {
+        g = long % short;
+        long = short;
+        short = g;
+    }
+    return (w * h - (w + h - g));
+}
+```
